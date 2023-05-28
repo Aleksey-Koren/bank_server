@@ -22,6 +22,7 @@ public class ServerTread implements Runnable {
             while (true) {
                 String requestMessage = in.readLine();
                 if(requestMessage == null || "exit".equals(requestMessage)) {
+                    out.println("Session cosed");
                     System.out.println("Session has been closed by client");
                     break;
                 }

@@ -12,7 +12,6 @@ public class RequestProcessor implements Runnable {
     public void processRequest(Request request) {
         try {
             boolean success = this.requests.offer(request, 10, TimeUnit.SECONDS);
-
             if(!success) {
                 PrintWriter out = request.getOut();
                 out.println("Connection was closed because of timeout in request queue");
@@ -26,16 +25,17 @@ public class RequestProcessor implements Runnable {
 
     @Override
     public void run() {
-        CommandProcessor commandProcessor = new CommandProcessor();
+
         try {
             while (true) {
+                CommandProcessor commandProcessor = new CommandProcessor();
                 Request request = this.requests.take();
                 String responseMessage = commandProcessor.processCommand(request.getRequestMessage());
                 PrintWriter out = request.getOut();
                 out.println(responseMessage);
             }
 
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             System.out.println("Server was stopped because of exception");
             throw new RuntimeException(e);
         }
