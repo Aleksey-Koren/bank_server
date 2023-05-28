@@ -21,8 +21,6 @@ public class CommandProcessor {
 
             default: return "unsupported command: " + commandName;
         }
-
-
     }
 
     private String deposit(String[] command) {
