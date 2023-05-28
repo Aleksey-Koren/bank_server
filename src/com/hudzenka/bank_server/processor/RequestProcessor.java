@@ -1,4 +1,7 @@
-package com.hudzenka.bank_server;
+package com.hudzenka.bank_server.processor;
+
+import com.hudzenka.bank_server.model.Request;
+import com.hudzenka.bank_server.processor.CommandProcessor;
 
 import java.io.PrintWriter;
 import java.util.concurrent.BlockingQueue;
@@ -26,9 +29,10 @@ public class RequestProcessor implements Runnable {
     @Override
     public void run() {
 
+        CommandProcessor commandProcessor = new CommandProcessor();
         try {
             while (true) {
-                CommandProcessor commandProcessor = new CommandProcessor();
+
                 Request request = this.requests.take();
                 String responseMessage = commandProcessor.processCommand(request.getRequestMessage());
                 PrintWriter out = request.getOut();

@@ -1,4 +1,4 @@
-package com.hudzenka.bank_server;
+package com.hudzenka.bank_server.model;
 
 import java.io.PrintWriter;
 

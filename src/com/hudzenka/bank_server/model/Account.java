@@ -1,4 +1,4 @@
-package com.hudzenka.bank_server;
+package com.hudzenka.bank_server.model;
 
 public class Account {
     //Unique identifier. Have to be unique for each line in datafile

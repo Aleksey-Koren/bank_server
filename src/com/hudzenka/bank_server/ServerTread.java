@@ -1,5 +1,8 @@
 package com.hudzenka.bank_server;
 
+import com.hudzenka.bank_server.model.Request;
+import com.hudzenka.bank_server.processor.RequestProcessor;
+
 import java.io.*;
 import java.net.Socket;
 
