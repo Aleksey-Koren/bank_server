@@ -4,12 +4,12 @@ import java.io.PrintWriter;
 
 public class Request {
 
-    private final String requestMessage;
+    private final String command;
     private final PrintWriter out;
 
 
-    public Request (PrintWriter out, String requestMessage) {
-        this.requestMessage = requestMessage;
+    public Request (PrintWriter out, String command) {
+        this.command = command;
         this.out = out;
     }
 
@@ -17,8 +17,8 @@ public class Request {
         return out;
     }
 
-    public String getRequestMessage() {
-        return requestMessage;
+    public String getCommand() {
+        return command;
     }
 
 }

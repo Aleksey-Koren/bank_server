@@ -10,12 +10,16 @@ public class ServerRunner {
     public static void main(String[] args) throws IOException {
 
         try (ServerSocket server = new ServerSocket(3333)) {
+
             RequestProcessor requestProcessor = new RequestProcessor();
-            new Thread(requestProcessor).start();
+            Thread requestProcessorThread = new Thread(requestProcessor);
+            requestProcessorThread.start();
 
             while (true) {
                 Socket clientSocket = server.accept();
-                new Thread(new ServerTread(clientSocket, requestProcessor)).start();
+                ServerTread serverTread = new ServerTread(clientSocket, requestProcessor);
+                Thread thread = new Thread(serverTread);
+                thread.start();
             }
         }
 

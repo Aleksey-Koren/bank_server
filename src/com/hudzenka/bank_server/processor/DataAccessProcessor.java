@@ -4,7 +4,6 @@ import com.hudzenka.bank_server.exception.DataAccessException;
 import com.hudzenka.bank_server.exception.FileParsingException;
 import com.hudzenka.bank_server.model.Account;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;

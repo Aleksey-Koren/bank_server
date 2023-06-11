@@ -8,8 +8,8 @@ public class CommandProcessor {
 
     private final DataAccessProcessor dataAccessProcessor;
 
-    public CommandProcessor() {
-        dataAccessProcessor = new DataAccessProcessor();
+    public CommandProcessor(DataAccessProcessor dataAccessProcessor) {
+        this.dataAccessProcessor = dataAccessProcessor;
     }
     public String processCommand(String commandMessage) {
         String[] command = commandMessage.split(" ");

@@ -24,19 +24,18 @@ public class ServerTread implements Runnable {
 
             while (true) {
                 String requestMessage = in.readLine();
-                if(requestMessage == null || "exit".equals(requestMessage)) {
-                    out.println("Session cosed");
-                    System.out.println("Session has been closed by client");
+
+                if ("exit".equals(requestMessage)) {
+                    System.out.println("Exit command received. Session is closed");
                     break;
                 }
+
                 Request request = new Request(out, requestMessage);
                 processor.processRequest(request);
             }
-
         } catch (Exception e) {
-            System.out.println("Exception during session. Session is closed. Resources are cosed");
+            System.out.println("Exception during session. Session is closed");
             e.printStackTrace();
-
         }
     }
 }

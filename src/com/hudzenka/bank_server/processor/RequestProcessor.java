@@ -9,17 +9,16 @@ import java.util.concurrent.TimeUnit;
 
 public class RequestProcessor implements Runnable {
 
-    private final BlockingQueue<Request> requests = new LinkedBlockingQueue<>(1000);
+    private final BlockingQueue<Request> requestsQueue = new LinkedBlockingQueue<>(1000);
 
     public void processRequest(Request request) {
         try {
-            boolean success = this.requests.offer(request, 10, TimeUnit.SECONDS);
+            boolean success = this.requestsQueue.offer(request, 10, TimeUnit.SECONDS);
             if(!success) {
                 PrintWriter out = request.getOut();
                 out.println("Connection was closed because of timeout in request queue");
                 throw new RuntimeException("Connection was closed because of timeout in request queue");
             }
-
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -27,19 +26,22 @@ public class RequestProcessor implements Runnable {
 
     @Override
     public void run() {
-        CommandProcessor commandProcessor = new CommandProcessor();
+        DataAccessProcessor dataAccessProcessor = new DataAccessProcessor();
+        CommandProcessor commandProcessor = new CommandProcessor(dataAccessProcessor);
+
         try {
             while (true) {
 
-                Request request = this.requests.take();
-                String responseMessage = commandProcessor.processCommand(request.getRequestMessage());
-                PrintWriter out = request.getOut();
+                Request requestFromTheQueue = this.requestsQueue.take();
+                String commandFromTheRequest = requestFromTheQueue.getCommand();
+                String responseMessage = commandProcessor.processCommand(commandFromTheRequest);
+                PrintWriter out = requestFromTheQueue.getOut();
                 out.println(responseMessage);
             }
 
         } catch (Exception e) {
-            System.out.println("Server was stopped because of exception");
-            throw new RuntimeException(e);
+            System.out.println("Exception due request processing");
+            e.printStackTrace();
         }
     }
 }
